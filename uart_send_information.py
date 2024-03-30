@@ -71,7 +71,7 @@ def uart_send(lable,x,y1,y2):
     #key_space_byte = key_space.encode()
     #line_space_byte = line_space.encode()
     # print(label_number,x,y)
-    data = label_number+key_space+x+key_space+ y1 +key_space+ y2 + line_space
+    data = 'v' + key_space + label_number+key_space+x+key_space+ y1 +key_space+ y2 + line_space
     print(data)
     serial_port.write(data.encode())
     # serial_port.write("g\r\n".encode())
