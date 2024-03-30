@@ -34,7 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
-
+import yaml
 import torch
 
 FILE = Path(__file__).resolve()
@@ -319,16 +319,35 @@ def parse_opt():
     print_args(vars(opt))
     return opt
 
+def read_yaml_file(file_path):
+    with open(file_path, 'r') as file:
+        try:
+            data = yaml.safe_load(file)
+        except yaml.YAMLError as exc:
+            print(exc)
+            data = {}  # Return an empty dictionary in case of error
+    return data
+
+
 def caculate_dist(object_pixel_y):
-    f_y = 595.562146
-    Y_c = 20.1  #相机高度
-    C_y = 236.125348
+    param = read_yaml_file('camera.yaml')
+    f_y = param['Camera']['IntrinsicParameters']['FocalLength'][1]
+    Y_c = param['Camera']['Height']  
+    C_y = param['Camera']['IntrinsicParameters']['PrincipalPoint'][1]
+
+    # f_y = 595.562146
+    # Y_c = 20.1  #相机高度
+    # C_y = 236.125348
     dist = (f_y * Y_c) / (object_pixel_y - C_y)
     return dist
 
 def caculate_world_y(object_pixel_x,dist):
-    f_x = 595.282567
-    C_x = 318.001724
+    param = read_yaml_file('camera.yaml')
+    f_x = param['Camera']['IntrinsicParameters']['FocalLength'][0]
+    C_x = param['Camera']['IntrinsicParameters']['PrincipalPoint'][0]
+
+    # f_x = 595.282567
+    # C_x = 318.001724
     X_c = (object_pixel_x - C_x) * dist / f_x
     return X_c #Camera方向的X值就是世界坐标系下的y
 

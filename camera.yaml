@@ -1,0 +1,18 @@
+Camera:
+  IntrinsicParameters:
+    FocalLength: [595.282567, 595.562146]
+    PrincipalPoint: [318.001724, 236.125348]
+  Height: 20.1 #cm  
+    # DistortionCoefficients: [k1, k2, p1, p2, k3]
+    
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+
+# Camera calibration and distortion parameters (OpenCV) 
+
+
+
+
+
